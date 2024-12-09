@@ -1,0 +1,17 @@
+title: Date attributes
+properties:
+  max:
+    description: The latest selectable date.
+    format: date
+    type: string
+  min:
+    description: The earliest selectable date.
+    format: date
+    type: string
+  step:
+    default: 1
+    description: The increment (in days).
+    format: integer
+    minimum: 1
+    type: number
+type: object

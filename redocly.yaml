@@ -1,0 +1,20 @@
+apis:
+  form-spec@v1.0.0:
+    root: ./openapi/spec@v1.yaml
+    output: ./bundles/form-spec@v1.json
+extends: 
+  -  recommended
+theme:
+  openapi:
+    ctrlFHijack: false
+    generateCodeSamples:
+      languages: []
+    hideSchemaTitles: true
+    hideSecuritySection: true
+    hideTryItPanel: true
+    onlyRequiredInSamples: true
+    pagination: section
+    showNextButton: false
+    sortEnumValuesAlphabetically: true
+    sortPropsAlphabetically: true
+    sortTagsAlphabetically: true

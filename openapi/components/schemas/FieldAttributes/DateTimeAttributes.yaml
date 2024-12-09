@@ -1,0 +1,17 @@
+title: Date-time attributes
+properties:
+  max:
+    description: The latest selectable date-time, in the `YYYY-MM-DDTHH:mm` format.
+    format: date-time
+    type: string
+  min:
+    description: The earliest selectable date-time, in the `YYYY-MM-DDTHH:mm` format.
+    format: date
+    type: string
+  step:
+    default: 60
+    description: The increment (in seconds).
+    format: integer
+    minimum: 1
+    type: number
+type: object

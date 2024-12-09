@@ -1,0 +1,7 @@
+title: Number field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/NumberAttributes.yaml
+description: A field for number data types. This could correspond to an `INPUT` HTML block with a `type="number"` attribute.
+x-tags: 
+  - fields

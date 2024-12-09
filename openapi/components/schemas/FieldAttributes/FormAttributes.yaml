@@ -1,0 +1,11 @@
+title: Form attributes
+properties:
+  fields:
+    title: Fields
+    additionalProperties:
+      $ref: ../Field.yaml
+    description: A collection of nested fields.
+    type: object
+required:
+  - fields
+type: object

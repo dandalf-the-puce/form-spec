@@ -1,0 +1,7 @@
+title: Textarea field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/TextAttributes.yaml
+description: A field for longer string data types. This could correspond to a `TEXTAREA` HTML block.
+x-tags: 
+  - fields

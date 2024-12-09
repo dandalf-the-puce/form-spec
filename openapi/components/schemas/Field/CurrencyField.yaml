@@ -1,0 +1,7 @@
+title: Currency field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/Choice/ChoiceAttributes.yaml
+description: A field for choosing from a list of currencies. In a simple HTML form, this could correspond to a `SELECT` block.
+x-tags: 
+  - fields

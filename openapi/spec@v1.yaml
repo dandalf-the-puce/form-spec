@@ -1,0 +1,32 @@
+openapi: '3.1.0'
+info: 
+  title: Form specification
+  contact: 
+    name: Dan Blair
+    email: 1danblair@gmail.com
+  description:
+    $ref: ./description.md
+  license:
+    name: MIT License
+    identifier: MIT
+  version: '1.0.0'
+components:
+  schemas:
+    Field:
+      $ref: ./components/schemas/Field.yaml
+    FormError:
+      $ref: components/schemas/Error/FormError.yaml
+    FormStructure:
+      $ref: ./components/schemas/FormStructure.yaml
+paths: {}
+security: []
+servers:
+  - url: /
+tags:
+  - name: schemas
+    description: A collection of schemas for forms and form submission responses.
+    x-displayName: Form schemas
+  - name: fields
+    description: A collection of schemas to describe the kinds of fields that can appear in forms. Fields share common attributes, but each type may contain additional attributes.
+    x-displayName: Field schemas
+webhooks: {}

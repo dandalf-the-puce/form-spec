@@ -1,0 +1,17 @@
+title: Form error
+description: A schema to describe form submission errors. Every error must have a message to inform the user that an error has occurred. The schema can include additional details about which fields contain errors.
+properties:
+  form:
+    title: Form errors
+    additionalProperties:
+      $ref: ./FieldErrorCollection.yaml
+    description: A collection (if any) of error messages for individual fields. Each key value corresponds to the key value of a field in the original form structure.
+  message:
+    title: Error message
+    description: A user-friendly message explaining the reason for the error response.
+    type: string
+required:
+  - message
+type: object
+x-tags:
+  -  schemas

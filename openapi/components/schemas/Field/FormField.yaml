@@ -1,0 +1,7 @@
+title: Form field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/FormAttributes.yaml
+description: A field which contains nested fields. This is ideal for situations where an HTML `name` attribute would be `books[title]` or similar.
+x-tags: 
+  - fields

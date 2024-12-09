@@ -1,0 +1,14 @@
+title: File attributes
+properties:
+  accept:
+    description: A comma-separated list of accepted file MIME types.
+    type: string
+  max_size:
+    description: The maximum file size accepted. This could be an integer (in bytes) or a string (with unit).
+    type:
+      - integer
+      - string
+  multiple:
+    description: Whether to allow multiple files or not.
+    type: boolean
+type: object

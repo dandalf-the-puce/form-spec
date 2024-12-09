@@ -1,0 +1,17 @@
+title: Choice option
+description: The option in a choice field.
+properties:
+  description:
+    description: A description of the option. Can be displayed as a tooltip.
+    type: string
+  disabled:
+    description: Whether the option can be selected or not. Disabled options may also be hidden from users.
+    type: boolean
+  label:
+    description: A human-friendly label for the value. When not present, display the value as a string instead.
+    type: string
+  value:
+    description: The value of the option, in the accepted data type.
+required:
+  - value
+type: object

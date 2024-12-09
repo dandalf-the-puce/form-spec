@@ -1,0 +1,17 @@
+title: Time attributes
+properties:
+  max:
+    description: The latest selectable time.
+    format: time
+    type: string
+  min:
+    description: The earliest selectable time.
+    format: time
+    type: string
+  step:
+    default: 60
+    description: The increment (in seconds).
+    format: integer
+    minimum: 1
+    type: number
+type: object

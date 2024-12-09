@@ -1,0 +1,3 @@
+title: Rich text block
+description: The "block" (HTML, MD, etc) for a rich text field.
+type: string

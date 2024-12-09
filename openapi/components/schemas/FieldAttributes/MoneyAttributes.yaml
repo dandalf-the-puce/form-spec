@@ -1,0 +1,74 @@
+title: Money attributes
+description: A field for displaying money values with specific formatting. This could correspond to an `input` block that makes use of the JavaScript `Intl.NumberFormat` object.
+properties:
+  currency:
+    description: An ISO-4217 currency code.
+    type: string
+  currency_display:
+    default: symbol
+    description: |
+      How to display the currency format.
+
+      * `code`: Use the ISO code
+      * `name`: Use the currency name
+      * `narrow_symbol`: Use the narrow format symbol
+      * `symbol`: Use the currency symbol
+    enum:
+      - code
+      - name
+      - narrow_symbol
+      - symbol
+    type: string
+  currency_sign:
+    default: standard
+    description: |
+      Whether to use a minus sign or parentheses to indicate negative values.
+
+      * `accounting`: Use parentheses
+      * `standard`: Use minus sign
+    enum:
+      - accounting
+      - standard
+    type: string
+  locale:
+    description: The locale for the money format.
+    type: string
+  sign_display:
+    default: auto
+    description: |
+      When to display a minus or plus sign.
+
+      * `always`: Always display the sign
+      * `auto` Negative values only
+      * `except_zero`: Positive and negative values, but not zero
+      * `negative`: Negative values only
+      * `never`: Never display the sign
+    enum:
+      - always
+      - auto
+      - except_zero
+      - negative
+      - never
+    type: string
+  use_grouping:
+    default: min2
+    description: |
+      Whether to use grouping separators.
+
+      * `always`: Always display separators, regardless of locale preferences
+      * `auto`: Display separators based on locale preferences
+      * `min2`: Display separators when there are at least two digits in a group
+      * `never`: Never display separators
+    enum:
+      - always
+      - auto
+      - min2
+      - never
+required:
+  - currency
+  - currency_display
+  - currency_sign
+  - locale
+  - sign_display
+  - use_grouping
+type: object

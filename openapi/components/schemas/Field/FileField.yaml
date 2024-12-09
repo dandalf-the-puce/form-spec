@@ -1,0 +1,7 @@
+title: File field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/FileAttributes.yaml
+description: A field for uploading one or more files. This can correspond to an `INPUT` HTML block with the `type="file"` attribute.
+x-tags: 
+  - fields

@@ -1,0 +1,13 @@
+title: Number attributes
+properties:
+  max_value:
+    description: The maximum numeric value the field may have to be valid.
+    type: number
+  min_value:
+    description: The minimum numeric value the field must have to be valid.
+    type: number
+  step:
+    description: The incremental steps between valid number values. This value can be an integer or a float.
+    exclusiveMinimum: 0
+    type: number
+type: object

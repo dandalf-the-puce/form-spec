@@ -1,0 +1,31 @@
+title: Form structure
+description: An object to describe the structure of the form.
+properties:
+  auto_focus:
+    title: Auto focus property
+    default: false
+    description: The field (if any) to automatically focus on when the form loads.
+    oneOf:
+      - title: First field boolean
+        type: boolean
+        description: When `false`, do not automatically focus on any field. When `true`, automatically focus on the first field.
+      - title: Auto focus field key
+        $ref: ./FieldKey.yaml
+        description: When a string, automatically focus on the field with the corresponding key. If the field is not present, do not focus on any field.
+  fields:
+    title: Form fields
+    additionalProperties:
+      $ref: ./Field.yaml
+    description: A collection of fields and their properties. The key corresponds to the field's key (ie the `name` attribute for HTML forms). The key value corresponds the field's properties.
+    type: object
+  version:
+    title: Form spec version
+    description: The form specification version the structure uses.
+    pattern: '^\d+?\.\d+?\.\d+?$'
+    type: string
+required:
+  - fields
+  - version
+type: object
+x-tags:
+  -  schemas

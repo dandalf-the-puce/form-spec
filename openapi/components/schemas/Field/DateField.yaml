@@ -1,0 +1,7 @@
+title: Date field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/DateAttributes.yaml
+description: A field for selecting a single date. This can correspond to an `INPUT` HTML block with the `type="date"` attribute.
+x-tags: 
+  - fields

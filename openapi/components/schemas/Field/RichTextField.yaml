@@ -1,0 +1,7 @@
+title: Rich text field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/RichText/RichTextAttributes.yaml
+description: A field for rich text. This can correspond to a WYSIWYG editor.
+x-tags: 
+  - fields

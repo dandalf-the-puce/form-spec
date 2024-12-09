@@ -1,0 +1,7 @@
+title: Choice field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/Choice/ChoiceAttributes.yaml
+description: A field containing a list of choices for the user. In a simple HTML form, this could correspond to a `SELECT` block.
+x-tags: 
+  - fields

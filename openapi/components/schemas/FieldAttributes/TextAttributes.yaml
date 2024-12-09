@@ -1,0 +1,12 @@
+title: Text attributes
+properties:
+  max_length:
+    description: When present, the character limit for the field.
+    type: integer
+  min_length:
+    description: When present, the minimum number of characters required for the field value to be valid.
+    type: integer
+  pattern:
+    description: A regular expression that the field value must follow to be valid.
+    type: string
+type: object

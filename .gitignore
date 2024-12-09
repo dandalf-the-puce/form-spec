@@ -1,0 +1,11 @@
+.bash_history
+.cache
+.npm
+.vscode
+.yarn
+.yarnrc
+docker-compose.yaml
+Dockerfile
+node_modules
+yarn-error.log
+yarn.lock

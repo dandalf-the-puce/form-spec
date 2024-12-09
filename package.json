@@ -1,0 +1,28 @@
+{
+    "name": "form-spec",
+    "author": {
+        "name": "Dan Blair",
+        "email": "1danblair@gmail.com"
+    },
+    "description": "A specification to describe forms",
+    "devDependencies": {
+        "@redocly/cli": "^1.25.15"
+    },
+    "keywords": [
+        "OAS",
+        "OpenAPI",
+        "forms"
+    ],
+    "license": "MIT",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "/"
+    },
+    "scripts": {
+        "build": "redocly bundle",
+        "prepare": "redocly lint",
+        "preview": "redocly preview-docs"
+    },
+    "version": "1.0.0"
+}

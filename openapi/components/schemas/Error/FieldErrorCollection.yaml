@@ -1,0 +1,6 @@
+title: Field error collection
+description: An array of error messages for the corresponding field.
+items:
+  type: string
+type: array
+uniqueItems: true

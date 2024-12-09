@@ -1,0 +1,7 @@
+title: Boolean field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/Choice/ChoiceAttributes.yaml
+description: A field containing true/false choices for the user. This field could be rendered any number of ways (select, radio input, etc).
+x-tags: 
+  - fields

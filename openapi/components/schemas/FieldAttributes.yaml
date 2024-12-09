@@ -1,0 +1,32 @@
+title: Field attributes
+description: A collection of shared properties for all field types.
+properties:
+  default_value:
+    description: The default value to use when no `value` property is provided. When this property is also absent, leave the field value blank.
+  description:
+    description: Information about the field to show the user. This can be displayed as a tooltip.
+    type: string
+  disabled:
+    description: Disabled fields are immutable by the user. They should not be part of requests. No error response must be returned if these fields are included in requests, but their values must be ignored. These fields can be hidden from users if desired.
+    type: boolean
+  label:
+    description: A human-friendly label for the field. When absent or blank, no label should be shown.
+    type: string
+  rank:
+    description: The suggested order/index for the field. When this property is absent (or two fields use the same value), default to alphabetical order by field key.
+    format: integer
+    minimum: 1
+    type: number
+  required:
+    default: false
+    description: Whether the field is required for submission or not. Users must not be able to submit forms with missing required field values.
+    type: boolean
+  type:
+    title: Field type
+    description: The type of field to display.
+    type: string
+  value:
+    description: The field's current value. When this property is present, the field must contain its value. When this property is absent, use the `default_value` property.
+required:
+  - type
+type: object

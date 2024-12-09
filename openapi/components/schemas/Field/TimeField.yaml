@@ -1,0 +1,7 @@
+title: Time field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/TimeAttributes.yaml
+description: A field for selecting a single time. This can correspond to an `INPUT` HTML block with the `type="time"` attribute.
+x-tags: 
+  - fields

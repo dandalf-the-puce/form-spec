@@ -1,0 +1,22 @@
+title: Choice attributes
+properties:
+  empty_option:
+    title: Empty option property
+    description: Whether the field will accept an empty option or not. An empty option's value must be `null`.
+    oneOf: 
+      - title: Empty choice boolean
+        description: When `false`, no empty option is permitted. When `true`, an empty option is permitted and its exact wording can be a generic "Nothing selected" or similar message.
+        type: boolean
+      - title: Empty choice label
+        description: When a string, use this string as the label for the empty option.
+        type: string
+  multiple:
+    description: Whether to allow selecting multiple choices or not.
+    type: boolean
+  options:
+    description: An array of choices to select.
+    items:
+      $ref: ./ChoiceOption.yaml
+    type: array
+    uniqueItems: true
+type: object

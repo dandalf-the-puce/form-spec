@@ -1,0 +1,7 @@
+title: Money field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/MoneyAttributes.yaml
+description: A field to display monetary values with formatting.
+x-tags: 
+  - fields

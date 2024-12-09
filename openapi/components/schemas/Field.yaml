@@ -1,0 +1,34 @@
+title: Field
+description: The generic schema to describe a field. All fields share common properties (aka attributes), but may have their own additional properties. A field's `type` property determines the exact type of field.
+discriminator:
+  propertyName: type
+  mapping:
+    boolean: ./Field/BooleanField.yaml
+    choice: ./Field/ChoiceField.yaml
+    currency: ./Field/CurrencyField.yaml
+    date: ./Field/DateField.yaml
+    date-time: ./Field/DateTimeField.yaml
+    file: ./Field/FileField.yaml
+    form: ./Field/FormField.yaml
+    money: ./Field/MoneyField.yaml
+    number: ./Field/NumberField.yaml
+    password: ./Field/PasswordField.yaml
+    richtext: ./Field/RichTextField.yaml
+    text: ./Field/TextField.yaml
+    textarea: ./Field/TextareaField.yaml
+    time: ./Field/TimeField.yaml
+oneOf:
+  - $ref: ./Field/BooleanField.yaml
+  - $ref: ./Field/ChoiceField.yaml
+  - $ref: ./Field/CurrencyField.yaml
+  - $ref: ./Field/DateField.yaml
+  - $ref: ./Field/DateTimeField.yaml
+  - $ref: ./Field/FileField.yaml
+  - $ref: ./Field/FormField.yaml
+  - $ref: ./Field/MoneyField.yaml
+  - $ref: ./Field/NumberField.yaml
+  - $ref: ./Field/PasswordField.yaml
+  - $ref: ./Field/RichTextField.yaml
+  - $ref: ./Field/TextareaField.yaml
+  - $ref: ./Field/TextField.yaml
+  - $ref: ./Field/TimeField.yaml

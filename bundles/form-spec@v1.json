@@ -1,0 +1,747 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Form specification",
+    "contact": {
+      "name": "Dan Blair",
+      "email": "1danblair@gmail.com"
+    },
+    "description": "# Intro\n\nAn OpenAPI specification to describe forms. This spec has been created with HTTP requests in mind, but can be applied to other contexts.\n\n# Version notes\n\n## 1.0.0\n\n* Initial specification publication\n",
+    "license": {
+      "name": "MIT License",
+      "identifier": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "schemas",
+      "description": "A collection of schemas for forms and form submission responses.",
+      "x-displayName": "Form schemas"
+    },
+    {
+      "name": "fields",
+      "description": "A collection of schemas to describe the kinds of fields that can appear in forms. Fields share common attributes, but each type may contain additional attributes.",
+      "x-displayName": "Field schemas"
+    }
+  ],
+  "paths": {},
+  "webhooks": {},
+  "components": {
+    "schemas": {
+      "Field": {
+        "title": "Field",
+        "description": "The generic schema to describe a field. All fields share common properties (aka attributes), but may have their own additional properties. A field's `type` property determines the exact type of field.",
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "boolean": "#/components/schemas/BooleanField",
+            "choice": "#/components/schemas/ChoiceField",
+            "currency": "#/components/schemas/CurrencyField",
+            "date": "#/components/schemas/DateField",
+            "date-time": "#/components/schemas/DateTimeField",
+            "file": "#/components/schemas/FileField",
+            "form": "#/components/schemas/FormField",
+            "money": "#/components/schemas/MoneyField",
+            "number": "#/components/schemas/NumberField",
+            "password": "#/components/schemas/PasswordField",
+            "richtext": "#/components/schemas/RichTextField",
+            "text": "#/components/schemas/TextField",
+            "textarea": "#/components/schemas/TextareaField",
+            "time": "#/components/schemas/TimeField"
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/BooleanField"
+          },
+          {
+            "$ref": "#/components/schemas/ChoiceField"
+          },
+          {
+            "$ref": "#/components/schemas/CurrencyField"
+          },
+          {
+            "$ref": "#/components/schemas/DateField"
+          },
+          {
+            "$ref": "#/components/schemas/DateTimeField"
+          },
+          {
+            "$ref": "#/components/schemas/FileField"
+          },
+          {
+            "$ref": "#/components/schemas/FormField"
+          },
+          {
+            "$ref": "#/components/schemas/MoneyField"
+          },
+          {
+            "$ref": "#/components/schemas/NumberField"
+          },
+          {
+            "$ref": "#/components/schemas/PasswordField"
+          },
+          {
+            "$ref": "#/components/schemas/RichTextField"
+          },
+          {
+            "$ref": "#/components/schemas/TextareaField"
+          },
+          {
+            "$ref": "#/components/schemas/TextField"
+          },
+          {
+            "$ref": "#/components/schemas/TimeField"
+          }
+        ]
+      },
+      "FormError": {
+        "title": "Form error",
+        "description": "A schema to describe form submission errors. Every error must have a message to inform the user that an error has occurred. The schema can include additional details about which fields contain errors.",
+        "properties": {
+          "form": {
+            "title": "Form errors",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/FieldErrorCollection"
+            },
+            "description": "A collection (if any) of error messages for individual fields. Each key value corresponds to the key value of a field in the original form structure."
+          },
+          "message": {
+            "title": "Error message",
+            "description": "A user-friendly message explaining the reason for the error response.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "x-tags": [
+          "schemas"
+        ]
+      },
+      "FormStructure": {
+        "title": "Form structure",
+        "description": "An object to describe the structure of the form.",
+        "properties": {
+          "auto_focus": {
+            "title": "Auto focus property",
+            "default": false,
+            "description": "The field (if any) to automatically focus on when the form loads.",
+            "oneOf": [
+              {
+                "title": "First field boolean",
+                "type": "boolean",
+                "description": "When `false`, do not automatically focus on any field. When `true`, automatically focus on the first field."
+              },
+              {
+                "title": "Auto focus field key",
+                "$ref": "#/components/schemas/FieldKey",
+                "description": "When a string, automatically focus on the field with the corresponding key. If the field is not present, do not focus on any field."
+              }
+            ]
+          },
+          "fields": {
+            "title": "Form fields",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Field"
+            },
+            "description": "A collection of fields and their properties. The key corresponds to the field's key (ie the `name` attribute for HTML forms). The key value corresponds the field's properties.",
+            "type": "object"
+          },
+          "version": {
+            "title": "Form spec version",
+            "description": "The form specification version the structure uses.",
+            "pattern": "^\\d+?\\.\\d+?\\.\\d+?$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fields",
+          "version"
+        ],
+        "type": "object",
+        "x-tags": [
+          "schemas"
+        ]
+      },
+      "FieldAttributes": {
+        "title": "Field attributes",
+        "description": "A collection of shared properties for all field types.",
+        "properties": {
+          "default_value": {
+            "description": "The default value to use when no `value` property is provided. When this property is also absent, leave the field value blank."
+          },
+          "description": {
+            "description": "Information about the field to show the user. This can be displayed as a tooltip.",
+            "type": "string"
+          },
+          "disabled": {
+            "description": "Disabled fields are immutable by the user. They should not be part of requests. No error response must be returned if these fields are included in requests, but their values must be ignored. These fields can be hidden from users if desired.",
+            "type": "boolean"
+          },
+          "label": {
+            "description": "A human-friendly label for the field. When absent or blank, no label should be shown.",
+            "type": "string"
+          },
+          "rank": {
+            "description": "The suggested order/index for the field. When this property is absent (or two fields use the same value), default to alphabetical order by field key.",
+            "format": "integer",
+            "minimum": 1,
+            "type": "number"
+          },
+          "required": {
+            "default": false,
+            "description": "Whether the field is required for submission or not. Users must not be able to submit forms with missing required field values.",
+            "type": "boolean"
+          },
+          "type": {
+            "title": "Field type",
+            "description": "The type of field to display.",
+            "type": "string"
+          },
+          "value": {
+            "description": "The field's current value. When this property is present, the field must contain its value. When this property is absent, use the `default_value` property."
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "type": "object"
+      },
+      "ChoiceOption": {
+        "title": "Choice option",
+        "description": "The option in a choice field.",
+        "properties": {
+          "description": {
+            "description": "A description of the option. Can be displayed as a tooltip.",
+            "type": "string"
+          },
+          "disabled": {
+            "description": "Whether the option can be selected or not. Disabled options may also be hidden from users.",
+            "type": "boolean"
+          },
+          "label": {
+            "description": "A human-friendly label for the value. When not present, display the value as a string instead.",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value of the option, in the accepted data type."
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      },
+      "ChoiceAttributes": {
+        "title": "Choice attributes",
+        "properties": {
+          "empty_option": {
+            "title": "Empty option property",
+            "description": "Whether the field will accept an empty option or not. An empty option's value must be `null`.",
+            "oneOf": [
+              {
+                "title": "Empty choice boolean",
+                "description": "When `false`, no empty option is permitted. When `true`, an empty option is permitted and its exact wording can be a generic \"Nothing selected\" or similar message.",
+                "type": "boolean"
+              },
+              {
+                "title": "Empty choice label",
+                "description": "When a string, use this string as the label for the empty option.",
+                "type": "string"
+              }
+            ]
+          },
+          "multiple": {
+            "description": "Whether to allow selecting multiple choices or not.",
+            "type": "boolean"
+          },
+          "options": {
+            "description": "An array of choices to select.",
+            "items": {
+              "$ref": "#/components/schemas/ChoiceOption"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "type": "object"
+      },
+      "BooleanField": {
+        "title": "Boolean field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/ChoiceAttributes"
+          }
+        ],
+        "description": "A field containing true/false choices for the user. This field could be rendered any number of ways (select, radio input, etc).",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "ChoiceField": {
+        "title": "Choice field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/ChoiceAttributes"
+          }
+        ],
+        "description": "A field containing a list of choices for the user. In a simple HTML form, this could correspond to a `SELECT` block.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "CurrencyField": {
+        "title": "Currency field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/ChoiceAttributes"
+          }
+        ],
+        "description": "A field for choosing from a list of currencies. In a simple HTML form, this could correspond to a `SELECT` block.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "DateAttributes": {
+        "title": "Date attributes",
+        "properties": {
+          "max": {
+            "description": "The latest selectable date.",
+            "format": "date",
+            "type": "string"
+          },
+          "min": {
+            "description": "The earliest selectable date.",
+            "format": "date",
+            "type": "string"
+          },
+          "step": {
+            "default": 1,
+            "description": "The increment (in days).",
+            "format": "integer",
+            "minimum": 1,
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "DateField": {
+        "title": "Date field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/DateAttributes"
+          }
+        ],
+        "description": "A field for selecting a single date. This can correspond to an `INPUT` HTML block with the `type=\"date\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "DateTimeAttributes": {
+        "title": "Date-time attributes",
+        "properties": {
+          "max": {
+            "description": "The latest selectable date-time, in the `YYYY-MM-DDTHH:mm` format.",
+            "format": "date-time",
+            "type": "string"
+          },
+          "min": {
+            "description": "The earliest selectable date-time, in the `YYYY-MM-DDTHH:mm` format.",
+            "format": "date",
+            "type": "string"
+          },
+          "step": {
+            "default": 60,
+            "description": "The increment (in seconds).",
+            "format": "integer",
+            "minimum": 1,
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "DateTimeField": {
+        "title": "Date-time field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/DateTimeAttributes"
+          }
+        ],
+        "description": "A field for selecting a single date-time. This can correspond to an `INPUT` HTML block with the `type=\"datetime-local\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "FileAttributes": {
+        "title": "File attributes",
+        "properties": {
+          "accept": {
+            "description": "A comma-separated list of accepted file MIME types.",
+            "type": "string"
+          },
+          "max_size": {
+            "description": "The maximum file size accepted. This could be an integer (in bytes) or a string (with unit).",
+            "type": [
+              "integer",
+              "string"
+            ]
+          },
+          "multiple": {
+            "description": "Whether to allow multiple files or not.",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "FileField": {
+        "title": "File field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/FileAttributes"
+          }
+        ],
+        "description": "A field for uploading one or more files. This can correspond to an `INPUT` HTML block with the `type=\"file\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "FormAttributes": {
+        "title": "Form attributes",
+        "properties": {
+          "fields": {
+            "title": "Fields",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Field"
+            },
+            "description": "A collection of nested fields.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "fields"
+        ],
+        "type": "object"
+      },
+      "FormField": {
+        "title": "Form field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/FormAttributes"
+          }
+        ],
+        "description": "A field which contains nested fields. This is ideal for situations where an HTML `name` attribute would be `books[title]` or similar.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "MoneyAttributes": {
+        "title": "Money attributes",
+        "description": "A field for displaying money values with specific formatting. This could correspond to an `input` block that makes use of the JavaScript `Intl.NumberFormat` object.",
+        "properties": {
+          "currency": {
+            "description": "An ISO-4217 currency code.",
+            "type": "string"
+          },
+          "currency_display": {
+            "default": "symbol",
+            "description": "How to display the currency format.\n\n* `code`: Use the ISO code\n* `name`: Use the currency name\n* `narrow_symbol`: Use the narrow format symbol\n* `symbol`: Use the currency symbol\n",
+            "enum": [
+              "code",
+              "name",
+              "narrow_symbol",
+              "symbol"
+            ],
+            "type": "string"
+          },
+          "currency_sign": {
+            "default": "standard",
+            "description": "Whether to use a minus sign or parentheses to indicate negative values.\n\n* `accounting`: Use parentheses\n* `standard`: Use minus sign\n",
+            "enum": [
+              "accounting",
+              "standard"
+            ],
+            "type": "string"
+          },
+          "locale": {
+            "description": "The locale for the money format.",
+            "type": "string"
+          },
+          "sign_display": {
+            "default": "auto",
+            "description": "When to display a minus or plus sign.\n\n* `always`: Always display the sign\n* `auto` Negative values only\n* `except_zero`: Positive and negative values, but not zero\n* `negative`: Negative values only\n* `never`: Never display the sign\n",
+            "enum": [
+              "always",
+              "auto",
+              "except_zero",
+              "negative",
+              "never"
+            ],
+            "type": "string"
+          },
+          "use_grouping": {
+            "default": "min2",
+            "description": "Whether to use grouping separators.\n\n* `always`: Always display separators, regardless of locale preferences\n* `auto`: Display separators based on locale preferences\n* `min2`: Display separators when there are at least two digits in a group\n* `never`: Never display separators\n",
+            "enum": [
+              "always",
+              "auto",
+              "min2",
+              "never"
+            ]
+          }
+        },
+        "required": [
+          "currency",
+          "currency_display",
+          "currency_sign",
+          "locale",
+          "sign_display",
+          "use_grouping"
+        ],
+        "type": "object"
+      },
+      "MoneyField": {
+        "title": "Money field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/MoneyAttributes"
+          }
+        ],
+        "description": "A field to display monetary values with formatting.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "NumberAttributes": {
+        "title": "Number attributes",
+        "properties": {
+          "max_value": {
+            "description": "The maximum numeric value the field may have to be valid.",
+            "type": "number"
+          },
+          "min_value": {
+            "description": "The minimum numeric value the field must have to be valid.",
+            "type": "number"
+          },
+          "step": {
+            "description": "The incremental steps between valid number values. This value can be an integer or a float.",
+            "exclusiveMinimum": 0,
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "NumberField": {
+        "title": "Number field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/NumberAttributes"
+          }
+        ],
+        "description": "A field for number data types. This could correspond to an `INPUT` HTML block with a `type=\"number\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "TextAttributes": {
+        "title": "Text attributes",
+        "properties": {
+          "max_length": {
+            "description": "When present, the character limit for the field.",
+            "type": "integer"
+          },
+          "min_length": {
+            "description": "When present, the minimum number of characters required for the field value to be valid.",
+            "type": "integer"
+          },
+          "pattern": {
+            "description": "A regular expression that the field value must follow to be valid.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PasswordField": {
+        "title": "Password field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/TextAttributes"
+          }
+        ],
+        "description": "A field for sensitive text, such as passwords. This could correspond to an `INPUT` HTML block with a `type=\"password\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "RichTextBlock": {
+        "title": "Rich text block",
+        "description": "The \"block\" (HTML, MD, etc) for a rich text field.",
+        "type": "string"
+      },
+      "RichTextAttributes": {
+        "title": "Rich text attributes",
+        "properties": {
+          "allowed_blocks": {
+            "description": "A collection of \"blocks\" (HTML, MD, etc) which can be used for rich text. When absent all blocks are accepted. However, when empty, no blocks are accepted.",
+            "items": {
+              "$ref": "#/components/schemas/RichTextBlock"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "block_type": {
+            "description": "The type of \"blocks\" (HTML, MD, etc) to use for the rich text.",
+            "type": "string"
+          },
+          "prohibited_blocks": {
+            "description": "A collection of \"blocks\" (HTML, MD, etc) which will are not accepted for rich text. When absent or empty, there are no restricted blocks.",
+            "items": {
+              "$ref": "#/components/schemas/RichTextBlock"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "block_type"
+        ],
+        "type": "object"
+      },
+      "RichTextField": {
+        "title": "Rich text field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/RichTextAttributes"
+          }
+        ],
+        "description": "A field for rich text. This can correspond to a WYSIWYG editor.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "TextField": {
+        "title": "Text field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/TextAttributes"
+          }
+        ],
+        "description": "A field for short string data types. This could correspond to an `INPUT` HTML block with a `type=\"string\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "TextareaField": {
+        "title": "Textarea field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/TextAttributes"
+          }
+        ],
+        "description": "A field for longer string data types. This could correspond to a `TEXTAREA` HTML block.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "TimeAttributes": {
+        "title": "Time attributes",
+        "properties": {
+          "max": {
+            "description": "The latest selectable time.",
+            "format": "time",
+            "type": "string"
+          },
+          "min": {
+            "description": "The earliest selectable time.",
+            "format": "time",
+            "type": "string"
+          },
+          "step": {
+            "default": 60,
+            "description": "The increment (in seconds).",
+            "format": "integer",
+            "minimum": 1,
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "TimeField": {
+        "title": "Time field",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FieldAttributes"
+          },
+          {
+            "$ref": "#/components/schemas/TimeAttributes"
+          }
+        ],
+        "description": "A field for selecting a single time. This can correspond to an `INPUT` HTML block with the `type=\"time\"` attribute.",
+        "x-tags": [
+          "fields"
+        ]
+      },
+      "FieldErrorCollection": {
+        "title": "Field error collection",
+        "description": "An array of error messages for the corresponding field.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "FieldKey": {
+        "title": "Field key",
+        "description": "The key which identifies the unique field.",
+        "type": "string"
+      }
+    }
+  }
+}

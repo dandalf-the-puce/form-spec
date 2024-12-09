@@ -1,0 +1,7 @@
+title: Date-time field
+allOf:
+  - $ref: ../FieldAttributes.yaml
+  - $ref: ../FieldAttributes/DateTimeAttributes.yaml
+description: A field for selecting a single date-time. This can correspond to an `INPUT` HTML block with the `type="datetime-local"` attribute.
+x-tags: 
+  - fields

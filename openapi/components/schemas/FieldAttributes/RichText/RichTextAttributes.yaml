@@ -1,0 +1,20 @@
+title: Rich text attributes
+properties:
+  allowed_blocks:
+    description: A collection of "blocks" (HTML, MD, etc) which can be used for rich text. When absent all blocks are accepted. However, when empty, no blocks are accepted.
+    items:
+      $ref: ./RichTextBlock.yaml
+    type: array
+    uniqueItems: true
+  block_type:
+    description: The type of "blocks" (HTML, MD, etc) to use for the rich text.
+    type: string
+  prohibited_blocks:
+    description: A collection of "blocks" (HTML, MD, etc) which will are not accepted for rich text. When absent or empty, there are no restricted blocks.
+    items:
+      $ref: ./RichTextBlock.yaml
+    type: array
+    uniqueItems: true
+required: 
+  -  block_type
+type: object
